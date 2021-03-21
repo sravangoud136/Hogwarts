@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script>
+
+        $(document).on("click", ".enroll", function () {
+            var tr = $(this).closest('tr');
+            var d = {
+                CourseID: tr.data('id')
+            };
+            var userid=$("#userid").html();
+            $.ajax({
+                url: "http://localhost:5000/"+parseInt(userid)+"/mycourses",
+                data: d,
+                type: "POST",
+                success: function (data) {
+
+                    console.log(data);
+                }
+            }).done(function( msg ) {
+        window.location.reload();
+    });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">HoGwArts</a>
+
+        <form class="form-inline my-2 my-lg-0">
+            <p id="userid" style="color:white">{{currentuser}}</p>
+            <a class="btn btn-outline-success btn-sm" href="/login" style="color:white">Login</a>
+        </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container">
+                    <p>My Courses</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>CourseID</th>
+                            <th>CourseName</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for i in range(mycourseslength) %}
+                            <tr>
+                                <td>{{mycourses[i][0]}}</td>
+                                <td> {{mycourses[i][1]}}</td>
+                                <td><button class="btn btn-outline-danger btn-sm">Remove</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container">
+                    <p>Available Courses</p>
+                    <p id="sravan">HELLO</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>CourseName</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for i in range(allcourseslength) %}
+                            <tr data-id="{{allcourses[i][0]}}" data-name=" {{allcourses[i][1]}}">
+
+                                <td> {{allcourses[i][1]}}</td>
+                                <td><button class="btn btn-outline-success btn-sm enroll">Enroll</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  
+   
+
+</body>
+
+</html>
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
